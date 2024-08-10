@@ -15,40 +15,35 @@ An integrated alarm system is triggered after two consecutive incorrect combinat
 ## Detailed Module Descriptions
 ### Top-Level Module: combinationlock
 This module integrates all the components of the combination lock, including input conditioning, FSM control, combination storage, and display. It handles inputs from the DE1-SOC Board's switches and keys, processes the combination logic, and outputs the status on a 7-segment display.
-Inputs:
-CLOCK_50: Clock input from the DE1-SOC Board.
-SW[9:6]: 4-bit switch input representing the combination digits.
-KEY[3:0]: Key inputs for entering, changing the combination, and resetting the system.
-Output:
-HEX5: 7-segment display output to show the lock's status (open, alarm, new combination).
+
 
 ### Register Module: register
 A 4-bit register with enable functionality. It stores the combination input and updates it when a new combination is set.
 Key Operation:
-Stores the current combination code.
-Resets to a default combination on a system reset.
+-Stores the current combination code.
+-Resets to a default combination on a system reset.
 
 ### Comparator Module: compare
 Compares the entered combination against the stored combination to determine if the input is correct.
 Key Operation:
-Outputs a signal indicating whether the entered combination matches the stored combination.
+-Outputs a signal indicating whether the entered combination matches the stored combination.
 
 ### Input Conditioning Module: inputConditioning
 Debounces the input signals to ensure stable operation of the FSM by conditioning the key presses.
 Key Operation:
-Prevents spurious inputs from affecting the FSM transitions.
+-Prevents spurious inputs from affecting the FSM transitions.
 
 ### Moore State Machine Module: moorestatemachine
 The core of the lock's logic, controlling the state transitions based on user inputs and the correctness of the entered combination.
 Key States:
-Default: Awaiting user input.
-Open: The lock is open upon correct combination entry.
-Fail: Incorrect combination entered; system awaits further action.
-Alarm: Triggered after two consecutive incorrect entries.
-Change: Allows the user to set a new combination.
+-Default: Awaiting user input.
+-Open: The lock is open upon correct combination entry.
+-Fail: Incorrect combination entered; system awaits further action.
+-Alarm: Triggered after two consecutive incorrect entries.
+-Change: Allows the user to set a new combination.
 
 ### 7-Segment Display Module: hex7seg
 Converts the FSM's state into a readable output on the 7-segment display, showing whether the lock is open, in alarm mode, or allowing a new combination to be set.
 Key Operation:
-Displays different symbols based on the lock's status (- for default, A for alarm, n for new combination, O for open).
+-Displays different symbols based on the lock's status (- for default, A for alarm, n for new combination, O for open).
 
